@@ -6,11 +6,11 @@ Gem::Specification.new do |s|
   s.name        = "hlspider"
   s.version     = Hlspider::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ["TODO: Write your name"]
-  s.email       = ["TODO: Write your email address"]
+  s.authors     = ["Brooke McKim"]
+  s.email       = ["bmckim@telvue.com"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{ASYNC .m3u8 downloader}
+  s.description = %q{Downloads .m3u8 playlist files and confirms their segments are properly aligned.}
 
   s.rubyforge_project = "hlspider"
 

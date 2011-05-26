@@ -30,8 +30,7 @@ module HLSpider
           p "Segments are off #{@time}"
           @@log.error "**********"
           @@log.error segments.inspect
-          @@log.error "**********"
-        
+          @@log.error "**********"        
         else
           p "All Good. at #{segments[0]}"
           @@log.debug "^^^^^^^^^^^"
