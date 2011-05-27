@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Brooke McKim"]
   s.email       = ["bmckim@telvue.com"]
-  s.homepage    = ""
+  s.homepage    = "http://github.com/telvue/hlspider"
   s.summary     = %q{ASYNC .m3u8 downloader}
   s.description = %q{Downloads .m3u8 playlist files and confirms their segments are properly aligned.}
 

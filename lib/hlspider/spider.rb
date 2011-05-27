@@ -26,14 +26,15 @@ module HLSpider
           responses << {:title => req.req.uri.to_s, :body => req.response}
         end
         segments = Playlist.first_segment_numbers(responses)
-        log "--- #{segments.inspect} ---"
+        puts Time.now
+        put_and_log "--- #{segments.inspect} ---"
         segments.uniq!
       
         if segments.size > 1 && ((segments[0].to_i - segments[1].to_i).abs > 1)
           p "Segments are off #{@time}"
-          log "**********", "error"
-          log segments.inspect, "error"
-          log "**********", "error"
+          log "**********"
+          log segments.inspect
+          log "**********"
         else
           p "All Good. at #{segments[0]}"
           log "^^^^^^^^^^^"
@@ -47,9 +48,14 @@ module HLSpider
     
     private
     
-    def log(str, type = 'info')
-      #need to work on this eval
-      #eval "@log.#{type} #{str}" if @log
-    end  
+    def log(str)
+      #eval "@log.#{type} \"#{str}\"" if @log
+      @log.info str if @log
+    end
+    
+    def put_and_log(str)
+      log(str)
+      puts str
+    end    
   end  
 end
