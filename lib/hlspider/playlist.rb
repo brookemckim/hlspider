@@ -49,7 +49,7 @@ module HLSpider
     end  
   
   private
-    include ::Line
+    include Line
   
     def parse
       @valid = true if /#EXTM3U/.match(@file)
