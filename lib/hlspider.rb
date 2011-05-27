@@ -10,7 +10,7 @@ module HLSpider
     method_option :log,       :type => :string,  :default => ""
     def crawl
       while true
-        Spider.new(options[:playlists]).crawl(options[:log])
+        Spider.new(options[:playlists], options[:log]).crawl
         sleep options[:sleep]
       end  
     end  

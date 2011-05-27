@@ -39,7 +39,6 @@ module HLSpider
           log "^^^^^^^^^^^"
           log segments.inspect
           log "^^^^^^^^^^^"
-          end  
         end  
 
         EventMachine.stop
@@ -49,7 +48,8 @@ module HLSpider
     private
     
     def log(str, type = 'info')
-      eval "@log.#{type} \"#{str}\"" if @log
+      #need to work on this eval
+      #eval "@log.#{type} #{str}" if @log
     end  
   end  
 end
