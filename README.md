@@ -17,7 +17,7 @@ Usage
     Options:
     --playlists=one two three  
     [--sleep=N]  # Default: 5
-    [--log=LOG]  # Not implemented yet
+    [--log=LOG]  # Disabled by default - Log provides some extra debug information
   
 
   
