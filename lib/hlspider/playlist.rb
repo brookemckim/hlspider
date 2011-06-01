@@ -3,22 +3,6 @@ module HLSpider
     attr_accessor :file, :source
     attr_reader   :playlists, :segments
   
-    def self.first_segment_numbers(files = [])
-      playlists = []
-      files.each do |f|
-        playlist = Playlist.new(f[:body])
-        playlists << {:title => f[:title], :playlist => playlist} if playlist.valid?
-      end  
-    
-      segments = []
-      playlists.each do |p|
-        segment = /(\d*.ts)/.match(p[:playlist].segments.first)[0].gsub(".ts", "")
-        segments << segment
-      end
-    
-      return segments         
-    end  
-  
     def initialize(file, source = '')
       @file   = file
       @source = source
@@ -50,8 +34,6 @@ module HLSpider
     end  
   
   private
-    include Line
-  
     def parse
       @valid = true if /#EXTM3U/.match(@file)
     

@@ -1,3 +1,4 @@
+require 'rubygems'
 require 'em-synchrony'
 require 'em-synchrony/em-http'
 require 'logger'
@@ -11,6 +12,11 @@ module HLSpider
   
     def crawl
       playlists = dive(@playlists)
+      
+      puts "~~~~~~~~~~~~"
+      puts "PLAYLISTS AFTER DIVE:"
+      puts playlists.inspect
+      puts "~~~~~~~~~~~~"
       
       segments = []
       playlists.each { |p| segments << p.segments.first }
@@ -40,9 +46,11 @@ module HLSpider
     private
     
     def async_download(urls = [])
-      EM.synchrony do
+      res = nil
       
+      EM.synchrony do
         multi = EventMachine::Synchrony::Multi.new
+        
         urls.each_with_index do |p,i|
           log p
           puts "Downloading: #{p}"
@@ -51,32 +59,30 @@ module HLSpider
         end  
   
         res = multi.perform
+    
+        EventMachine.stop         
       end  
       
-      EventMachine.stop
-      
-      return res
+      return res   
     end  
     
-    def dive(playlists = [])
-      playlists.each do |p|
-        res = async_download(playlist.playlists)
+    def dive(urls = [])
+      playlists = []
+      
+      res = async_download(urls)              
+      res.requests.each do |req|
+        p = Playlist.new(req.response, req.req.uri.to_s)
         
-        res.requests.each do |req|
-          playlist = Playlist.new(req.response, req.req.uri.to_s)
-          
-          if playlist.valid?
-            if playlist.variable_playlist?
-              return dive(playlist.playlists)
-            else
-              return playlist
-            end 
+        if p.valid?
+          if p.variable_playlist?
+            playlists = dive(p.playlists)
           else
-            nil
-          end    
-        
+            playlists << p
+          end 
         end  
       end
+      
+      return playlists  
     end  
     
     def log(str)

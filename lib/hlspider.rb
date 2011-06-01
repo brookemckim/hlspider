@@ -18,6 +18,6 @@ module HLSpider
 end  
 
 path = File.expand_path(File.dirname(__FILE__))
-['line', 'spider', 'playlist'].each do |file|
+['spider', 'playlist'].each do |file|
   require File.join(path, 'hlspider', file)
 end
