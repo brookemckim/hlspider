@@ -1,6 +1,6 @@
 module HLSpider
   class Playlist
-    attr_accessor :file
+    attr_accessor :file, :source
     attr_reader   :playlists, :segments
   
     def self.first_segment_numbers(files = [])
@@ -19,9 +19,10 @@ module HLSpider
       return segments         
     end  
   
-    def initialize(file)
-      @file = file
-  
+    def initialize(file, source = '')
+      @file   = file
+      @source = source
+       
       @valid = false
       @variable_playlist = false
       @segment_playlist  = false
