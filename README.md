@@ -21,3 +21,4 @@ Usage
   
 
   
+hlspider crawl --playlists=http://site.tld/playlist1.m3u8 http://site.tld/playlist2.m3u8 http://site.tld/playlist3.m3u8
