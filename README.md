@@ -3,7 +3,10 @@ HLSpider
 ASYNC .m3u8 downloader. Downloads .m3u8 playlist files and confirms their segments are properly aligned.
 
 Usage
------  
+-----
+    hlspider crawl --playlists=http://site.tld/playlist1.m3u8 http://site.tld/playlist2.m3u8 http://site.tld/playlist3.m3u8
+
+  
     hlspider
 
     Tasks:
@@ -21,4 +24,3 @@ Usage
   
 
   
-hlspider crawl --playlists=http://site.tld/playlist1.m3u8 http://site.tld/playlist2.m3u8 http://site.tld/playlist3.m3u8
