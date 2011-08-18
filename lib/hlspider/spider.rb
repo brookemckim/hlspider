@@ -2,6 +2,7 @@ require 'rubygems'
 require 'em-synchrony'
 require 'em-synchrony/em-http'
 require 'logger'
+require_relative 'playlist'  
 
 module HLSpider
   class Spider
@@ -12,12 +13,7 @@ module HLSpider
   
     def crawl
       playlists = dive(@playlists)
-      
-      puts "~~~~~~~~~~~~"
-      puts "PLAYLISTS AFTER DIVE:"
-      puts playlists.inspect
-      puts "~~~~~~~~~~~~"
-      
+    
       segments = []
       playlists.each { |p| segments << p.segments.first }
       
@@ -36,7 +32,7 @@ module HLSpider
         log segments.inspect
         log "^^^^^^^^^^^"
       else  
-        p "No segemnts found - #{@time}"
+        p "No segements found - #{@time}"
         log "~~~~~~~~~~~"
         log "No segments!"
         log "~~~~~~~~~~~"
@@ -53,7 +49,6 @@ module HLSpider
         
         urls.each_with_index do |p,i|
           log p
-          puts "Downloading: #{p}"
           multi.add :"#{i}", EventMachine::HttpRequest.new(p).aget
           @time = Time.now
         end  
@@ -68,11 +63,11 @@ module HLSpider
     
     def dive(urls = [])
       playlists = []
-      
+            
       res = async_download(urls)              
       res.requests.each do |req|
         p = Playlist.new(req.response, req.req.uri.to_s)
-        
+      
         if p.valid?
           if p.variable_playlist?
             playlists = dive(p.playlists)

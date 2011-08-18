@@ -36,7 +36,6 @@ module HLSpider
   private
     def parse
       @valid = true if /#EXTM3U/.match(@file)
-    
       if has_playlist?(@file) && !has_segment?(@file)
         @variable_playlist = true 
         @file.each_line do |line|
@@ -53,7 +52,7 @@ module HLSpider
     end
   
     def has_segment?(str)
-      true if /.ts/.match(str)
+      true if /#EXT-X-MEDIA-SEQUENCE/.match(str)
     end
   
     def has_playlist?(str)
