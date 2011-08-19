@@ -5,7 +5,10 @@ ASYNC .m3u8 downloader. Downloads .m3u8 playlist files and confirms their segmen
 Usage
 -----
     hlspider crawl --playlists=http://site.tld/playlist1.m3u8 http://site.tld/playlist2.m3u8 http://site.tld/playlist3.m3u8
-
+    
+    OR just point it right at a smil
+    
+    hlspider crawl --playlists=http://site.tld/smil:playlist.m3u8
   
     hlspider
 
