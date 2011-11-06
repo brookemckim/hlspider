@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # HLSpider - the HTTP Live Streaming Spider
 Asynchronously downloads .m3u8 playlists and reports back on whether or not the playlists are aligned in time.
 
