@@ -11,7 +11,7 @@ Point HLSpider at multiple playlists and it will report back on whether or not t
 
 ```
 # Point the spider at multiple playlists
-playlist_urls = ["http://host.com/video1/playlist1.m3u8", "http://host.com/video1/playlist2.m3u8", "http://host.com/video1/playlist3.m3u8"]
+playlists = ["http://host.com/video1/playlist1.m3u8", "http://host.com/video1/playlist2.m3u8", "http://host.com/video1/playlist3.m3u8"]
 spider = HLSpider.new(playlists)
 
 # Crawl the parent playlist
@@ -24,9 +24,9 @@ spider.invalid_playlists
 playlist = spider.playlists[0]
 playlist.valid?
 playlist.segments
-playlists.url
-playlists.file
-playlists.target_duration
+playlist.url
+playlist.file
+playlist.target_duration
 ```
 
 HLSpider is also available from the command line
