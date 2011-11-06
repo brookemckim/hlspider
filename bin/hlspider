@@ -1,0 +1,51 @@
+#!/usr/bin/env ruby
+require 'optparse'
+ 
+begin
+  require 'hlspider'
+rescue LoadError
+  require 'rubygems'
+  require 'hlspider'
+end
+
+options = {}
+
+opts_parser = OptionParser.new do |opts|
+  opts.banner  = 'Downloads m3u8 playlists and confirms their segments are aligned.'
+  opts.banner += ''
+
+  opts.on('-p', '--playlists PLAYLISTS', 'URL(s) to playlist(s)') do |playlists|
+    options[:playlists] = playlists.split(' ')
+  end
+  
+  options[:loop] = 1
+  opts.on('-l', '--loop TIMES') do |l|
+    options[:loop] = l
+  end  
+  
+  opts.on( '-h', '--help', 'Display this screen' ) do
+    puts opts
+    exit
+  end
+end
+opts_parser.parse!
+
+spider = HLSpider::Spider.new(options[:playlists])
+
+x = 1
+while x <= options[:loop] do
+  if spider.crawl
+    if spider.aligned?
+      puts "--- Aligned at segment : #{spider.last_segments[0]} ---"
+    else
+      puts "--- Unaligned with segments : #{spider.last_segments} ---"
+    end
+  else
+    @errors.each do |err|
+      puts "--- #{err} ---"
+    end  
+  end    
+  
+  break if @errors
+end  
+    
