@@ -140,13 +140,13 @@ module HLSpider
       
       if has_playlist?(@file) && !has_segment?(@file)
         @variable_playlist = true 
-        
+
         @file.each_line do |line|
           @playlists << line.strip if has_playlist?(line)
         end  
       elsif has_segment?(@file) && !has_playlist?(@file)
         @segment_playlist  = true
-       
+
         @file.each_line do |line|         
           if has_segment?(line)
             @segments << filename(line.strip)

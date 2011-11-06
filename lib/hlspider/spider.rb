@@ -113,7 +113,7 @@ module HLSpider
       responses = async_download(urls)              
       responses.each do |resp|
         p = Playlist.new(resp.response, resp.req.uri.to_s)
-      
+              
         if p.valid?
           if p.variable_playlist?
             playlists = dive(p.playlists)

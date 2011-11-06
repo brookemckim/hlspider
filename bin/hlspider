@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 require 'optparse'
- 
+
 begin
   require 'hlspider'
 rescue LoadError
@@ -48,4 +48,3 @@ while x <= options[:loop] do
   
   break if @errors
 end  
-    

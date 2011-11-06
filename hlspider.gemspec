@@ -11,6 +11,7 @@ Gem::Specification.new do |s|
   s.summary     = %q{Asynchronously download and parse .m3u8 playlists.}
   s.description = %q{Asynchronously downloads .m3u8 playlists and reports back on whether or not the playlists are aligned in time.}
 
+
   s.rubyforge_project = "hlspider"
 
   s.files         = `git ls-files`.split("\n")

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # HLSpider - the HTTP Live Streaming Spider
 Asynchronously downloads .m3u8 playlists and reports back on whether or not the playlists are aligned in time.
 
@@ -34,4 +35,3 @@ HLSpider is also available from the command line
 ```
 hlspider crawl --playlists=http://host.com/video1/playlist1.m3u8 http://host.com/video1/playlist2.m3u8 http://host.com/video1/playlist3.m3u8
 ```
-
