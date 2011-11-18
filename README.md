@@ -13,11 +13,17 @@ Point HLSpider at multiple playlists and it will report back on whether or not t
 # Point the spider at multiple playlists
 playlists = ["http://host.com/video1/playlist1.m3u8", "http://host.com/video1/playlist2.m3u8", "http://host.com/video1/playlist3.m3u8"]
 spider = HLSpider.new(playlists)
+```
 
-# Crawl the parent playlist
+OR
+
+```
+# The parent multi bit rate playlist
 parent_url = "http://host.com/video1/all_bitrates_playlist.m3u8"
 spider = HLSpider.new(parent_url)
+```
 
+```
 spider.aligned?
 spider.invalid_playlists
 
@@ -33,4 +39,10 @@ HLSpider is also available from the command line
 
 ```
 hlspider crawl --playlists=http://host.com/video1/playlist1.m3u8 http://host.com/video1/playlist2.m3u8 http://host.com/video1/playlist3.m3u8
+```
+
+OR 
+
+```
+hlspider crawl --playlists=http://host.com/video1/all_bitrates_playlist.m3u8
 ```
