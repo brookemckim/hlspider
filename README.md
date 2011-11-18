@@ -38,11 +38,11 @@ playlist.target_duration
 HLSpider is also available from the command line
 
 ```
-hlspider crawl --playlists=http://host.com/video1/playlist1.m3u8,http://host.com/video1/playlist2.m3u8,http://host.com/video1/playlist3.m3u8
+hlspider --playlists=http://host.com/video1/playlist1.m3u8,http://host.com/video1/playlist2.m3u8,http://host.com/video1/playlist3.m3u8
 ```
 
 OR 
 
 ```
-hlspider crawl --playlists=http://host.com/video1/all_bitrates_playlist.m3u8
+hlspider --playlists=http://host.com/video1/all_bitrates_playlist.m3u8
 ```
