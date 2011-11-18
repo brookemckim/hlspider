@@ -14,13 +14,13 @@ opts_parser = OptionParser.new do |opts|
   opts.banner  = 'Downloads m3u8 playlists and confirms their segments are aligned.'
   opts.banner += ''
 
-  opts.on('-p', '--playlists PLAYLISTS', 'URL(s) to playlist(s)') do |playlists|
-    options[:playlists] = playlists.split(' ')
+  opts.on('-p', '--playlists PLAYLISTS', Array, 'URL(s) to playlist(s)') do |playlists|
+    options[:playlists] = playlists
   end
   
   options[:loop] = 1
-  opts.on('-l', '--loop TIMES') do |l|
-    options[:loop] = l
+  opts.on('-l', '--loop TIMES', Integer) do |l|
+    options[:loop] = l || 5
   end  
   
   opts.on( '-h', '--help', 'Display this screen' ) do
@@ -38,7 +38,7 @@ while x <= options[:loop] do
     if spider.aligned?
       puts "--- Aligned at segment : #{spider.last_segments[0]} ---"
     else
-      puts "--- Unaligned with segments : #{spider.last_segments} ---"
+      puts "--- Unaligned with segments : #{spider.last_segments.join(', ')} ---"
     end
   else
     @errors.each do |err|
@@ -47,4 +47,6 @@ while x <= options[:loop] do
   end    
   
   break if @errors
+  
+  x += 1
 end  

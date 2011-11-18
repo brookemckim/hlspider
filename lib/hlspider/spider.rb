@@ -64,7 +64,7 @@ module HLSpider
     #
     # Returns Boolean.
     def aligned?
-      last_segments.uniq == 1
+      last_segments.uniq.size == 1
     end  
     
     # Public: playlist getter. 
@@ -77,7 +77,8 @@ module HLSpider
     #
     # Returns Array of Playlists
     def playlists
-      @playlists ||= crawl
+      crawl if @playlists.nil?
+      @playlists
     end  
     
     # Public: Get Array of last segments across playlists. 
@@ -116,7 +117,7 @@ module HLSpider
               
         if p.valid?
           if p.variable_playlist?
-            playlists = dive(p.playlists)
+            playlists << dive(p.playlists)
           else
             playlists << p
           end 
@@ -125,7 +126,7 @@ module HLSpider
         end  
       end
       
-      return playlists  
+      return playlists.flatten  
     end     
   end  
 end
