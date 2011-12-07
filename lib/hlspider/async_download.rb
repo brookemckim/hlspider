@@ -20,9 +20,7 @@ module HLSpider
     # Raises error if there is a request problem. 
     def async_download(urls)
       urls = Array.new(urls)
-      
-      puts urls.inspect
-      
+            
       responses = nil
       EventMachine.run {
         multi = EventMachine::MultiRequest.new
