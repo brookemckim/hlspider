@@ -53,6 +53,36 @@ describe HLSpider::PlaylistLine do
     it "returns String with filename on String with filename" do
       PlaylistLine.filename(@segment_line).must_equal("video_123123023030.ts")
     end  
-  end   
+  end
+  
+  describe "#absolute_url?" do
+    it "returns true for full url" do
+      PlaylistLine.absolute_url?("http://www.google.com/gmail/").must_equal(true)
+    end  
+    
+    it "returns false for relative path" do
+      PlaylistLine.absolute_url?("holla/dolla.m3u8").must_equal(false)
+    end  
+  end 
+  
+  describe "#media_sequence_line?" do
+    it "returns false when line is not a media sequence line" do
+      PlaylistLine.media_sequence_line?("!!!!!!!hello").must_equal(false)
+    end
+    
+    it "returns true when line is a media sequence line" do
+      PlaylistLine.media_sequence_line?("#EXT-X-MEDIA-SEQUENCE:1739").must_equal(true)
+    end    
+  end
+  
+  describe "#parse_sequence" do
+    it "returns sequence number when the line has one" do
+      PlaylistLine.parse_sequence("#EXT-X-MEDIA-SEQUENCE:1739").must_equal(1739)
+    end  
+    
+    it "returns nil when line does not a sequence number" do
+      PlaylistLine.parse_sequence("~_~").must_equal(nil)
+    end  
+  end        
 end
   

@@ -91,7 +91,7 @@ module HLSpider
     #
     # Returns Array of Strings
     def last_segments
-      playlists.collect { |p| p.segments.last }
+      playlists.collect { |p| p.media_sequence }
     end  
     
     private

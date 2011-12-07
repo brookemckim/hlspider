@@ -36,6 +36,9 @@ module HLSpider
     # Public: Gets the target duration if available. 
     attr_reader :target_duration 
     
+    # Public: Gets the media sequence of the playlist.
+    attr_reader :media_sequence
+    
     # Internal: Initialize a Playlist.
     #
     # file   - A String containing an .m3u8 playlist file.
@@ -108,7 +111,28 @@ module HLSpider
     def valid?
       @valid
     end  
-
+    
+    # Public: Sub-Playlists of playlist file. Appends source if
+    #   playlists are not absolute urls.
+    #   
+    #
+    #
+    # Examples
+    #
+    #   playlists
+    #   # => ["http://site.tld/playlist_1.m3u8", "http://site.tld/playlist_2.m3u8"]
+    #
+    # Returns Array of Strings.
+    def playlists
+      @playlists.collect do |p|
+        if absolute_url?(p)
+          p
+        elsif @source
+          @source.sub(/\w*.m3u8/, p)
+        end    
+      end  
+    end  
+    
     # Public: Prints contents of @file.
     #
     #
@@ -152,6 +176,8 @@ module HLSpider
             @segments << filename(line.strip)
           elsif duration_line?(line)
             @target_duration = parse_duration(line.strip)
+          elsif media_sequence_line?(line)
+            @media_sequence = parse_sequence(line.strip)  
           end              
         end         
       else

@@ -21,6 +21,8 @@ module HLSpider
     def async_download(urls)
       urls = Array.new(urls)
       
+      puts urls.inspect
+      
       responses = nil
       EventMachine.run {
         multi = EventMachine::MultiRequest.new

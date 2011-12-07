@@ -15,7 +15,7 @@ module HLSpider
     #
     # Returns Boolean.
     def has_segment?(str)
-      !!/.*.ts(\z|\?)/.match(str)
+      !!/.*.ts(\z|\?|$)/.match(str)
     end
 
     # Internal: Checks if String str contains links to .m3u8 file extensions.
@@ -91,5 +91,59 @@ module HLSpider
     def filename(str)
      str.slice(/\w{1,}(.ts)/)
     end
+
+    # Internal: Parses string and returns whether or not it is an absolute url.
+    #
+    # str - String to be parsed
+    #    
+    # Examples
+    #
+    #   absolute_url?("directory/file.m3u8")
+    #   #=> false
+    #
+    #   absolute_url?("http://www.site.tld/file.m3u8")
+    #   #=> true
+    #
+    # Returns String or nil.    
+    def absolute_url?(str)
+      str.split("://").size > 1
+    end 
+    
+    # Internal: Parses string and returns whether or not it is a media sequence line.
+    #
+    # str - String to be parsed
+    #    
+    # Examples
+    #
+    #   media_sequence_line?("#EXT-X-MEDIA-SEQUENCE:1739")
+    #   #=> true
+    #
+    #   media_sequence_line?("holla")
+    #   #=> false
+    #
+    # Returns Boolean.
+    def media_sequence_line?(str)
+      !!/EXT-X-MEDIA-SEQUENCE/.match(str)
+    end
+    
+    # Internal: Parses string and returns media sequence number.
+    #
+    # line - Line to be parsed
+    #    
+    # Examples
+    #
+    #   parse_sequence("#EXT-X-MEDIA-SEQUENCE:1739")
+    #   #=> 1739
+    #
+    # Returns Integer or nil.
+    def parse_sequence(line)  
+      /#EXT-X-MEDIA-SEQUENCE:\s*(\d*)/.match(line)
+      
+      if sequence = Regexp.last_match(1)
+        sequence.to_i
+      else
+        nil
+      end    
+    end   
   end
 end
