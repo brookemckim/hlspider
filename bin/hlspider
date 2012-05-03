@@ -21,7 +21,12 @@ opts_parser = OptionParser.new do |opts|
   options[:loop] = 1
   opts.on('-l', '--loop TIMES', Integer) do |l|
     options[:loop] = l || 5
-  end  
+  end 
+  
+  options[:sleep] = 3
+  opts.on('-s', '--sleep SECONDS', Integer) do |s|
+    options[:sleep] = s
+  end   
   
   opts.on( '-h', '--help', 'Display this screen' ) do
     puts opts
@@ -48,5 +53,7 @@ while x <= options[:loop] do
   
   break if @errors
   
-  x += 1
+  x += 1 unless options[:loop] == 0
+  
+  sleep(options[:sleep])
 end  

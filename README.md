@@ -9,6 +9,8 @@ Point HLSpider at multiple playlists and it will report back on whether or not t
 
 ## Usage
 
+### Ruby
+
 ```
 # Point the spider at multiple playlists
 playlists = ["http://host.com/video1/playlist1.m3u8", "http://host.com/video1/playlist2.m3u8", "http://host.com/video1/playlist3.m3u8"]
@@ -35,7 +37,7 @@ playlist.file
 playlist.target_duration
 ```
 
-HLSpider is also available from the command line
+### Command line
 
 ```
 hlspider --playlists=http://host.com/video1/playlist1.m3u8,http://host.com/video1/playlist2.m3u8,http://host.com/video1/playlist3.m3u8
@@ -45,4 +47,10 @@ OR
 
 ```
 hlspider --playlists=http://host.com/video1/all_bitrates_playlist.m3u8
+```
+
+#### Options
+```
+--loop TIMES    - How many times the spider should compare the playlists.
+--sleep SECONDS - How many seconds the spider should sleep between loops.
 ```
