@@ -37,7 +37,12 @@ opts_parser.parse!
 
 spider = HLSpider::Spider.new(options[:playlists])
 
-x = 1
+if options[:loop] == 0
+  x = -1
+else
+  x = 1
+end
+  
 while x <= options[:loop] do
   if spider.crawl
     if spider.aligned?
