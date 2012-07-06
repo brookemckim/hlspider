@@ -43,7 +43,7 @@ module HLSpider
       if responses[:callback].size == urls.size
         responses[:callback].collect { |k,v| v }
       else
-        raise ConnectionError, "No all urls returned responses."
+        raise ConnectionError, "Not able to download all playlsts."
       end    
     end  
   end  
