@@ -41,7 +41,7 @@ module HLSpider
     #
     # Returns Array of Playlists
     def crawl!
-      self.playlists = dive(@urls)  
+      @playlists = dive(@urls)  
     end  
     
     # Public: Checks if playlists' segments are aligned.

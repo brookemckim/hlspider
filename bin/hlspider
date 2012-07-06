@@ -35,8 +35,13 @@ opts_parser = OptionParser.new do |opts|
 end
 opts_parser.parse!
 
-spider = HLSpider::Spider.new(options[:playlists])
-
+if options[:playlists]
+  spider = HLSpider::Spider.new(options[:playlists])
+else
+  puts "No playlists were specified."
+  exit(1)
+end
+  
 if options[:loop] == 0
   x = -1
 else
