@@ -3,7 +3,9 @@ require 'eventmachine'
 require 'em-http-request'
 
 module HLSpider
-  module AsyncDownload
+  module Downloader
+    class ConnectionError < StandardError; end;
+    
     # Internal: Asynchronosly download given URLs.
     #
     # urls  - An Array of strings or a single string of URL(s)
@@ -17,9 +19,10 @@ module HLSpider
     #   # => 
     #
     # Returns the Array of responses.
-    # Raises error if there is a request problem. 
-    def async_download(urls)
-      urls = Array.new(urls)
+    # Raises HLSpider::Downloader::ConnectionError if there was a problem
+    # downloading all urls. 
+    def download(urls)
+      urls = Array(urls)
             
       responses = nil
       EventMachine.run {
@@ -40,8 +43,7 @@ module HLSpider
       if responses[:callback].size == urls.size
         responses[:callback].collect { |k,v| v }
       else
-        puts "Connection Error"
-        #raise ConnectError
+        raise ConnectionError, "No all urls returned responses."
       end    
     end  
   end  
