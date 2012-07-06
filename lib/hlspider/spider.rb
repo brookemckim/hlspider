@@ -15,24 +15,20 @@ require 'em-http-request'
 
 module HLSpider
   class Spider 
+    class InvalidPlaylist < StandardError; end;
+    
     # Public: Gets Array of urls.
     attr_reader :urls
+    
     # Public: Gets Array of valid playlists.
     attr_reader :playlists
-    # Public: Gets Array of invalid playlists.
-    attr_reader :invalid_playlists
-    # Public: Gets Array of errors.
-    attr_reader :errors
-    
+        
     # Public: Initialize a Playlist Spider.
     #
     # urls   - An Array containing multiple String urls to playlist files.
     #          Also accepts single String url that points to parent playlist.
     def initialize(urls)
-      @urls     = [urls].flatten
-      
-      @invalid_playlists = []
-      @errors            = []
+      @urls = Array(urls)
     end  
 
     # Public: Starts the download of Array urls
@@ -41,17 +37,11 @@ module HLSpider
     # Examples
     #
     #   crawl
-    #   # => true
+    #   # => [#<HLSpider::Playlist:0x10ca9bef8>, #<HLSpider::Playlist:0x10ca9bef9>]
     #
-    # Returns Boolean.
-    def crawl
-      @playlists = dive(@urls)
-      
-      if @errors.empty?
-        true
-      else
-        false
-      end    
+    # Returns Array of Playlists
+    def crawl!
+      self.playlists = dive(@urls)  
     end  
     
     # Public: Checks if playlists' segments are aligned.
@@ -77,8 +67,7 @@ module HLSpider
     #
     # Returns Array of Playlists
     def playlists
-      crawl if @playlists.nil?
-      @playlists
+      @playlists ||= crawl!
     end  
     
     # Public: Get Array of last segments across playlists. 
@@ -96,7 +85,7 @@ module HLSpider
     
     private
     
-    include AsyncDownload
+    include Downloader
     
     # Internal: Download playlists from Array urls.
     #
@@ -107,11 +96,11 @@ module HLSpider
     #   # => [#<HLSpider::Playlist:0x10ca9bef8>, #<HLSpider::Playlist:0x10ca9bef9>]
     #
     # Returns Array of Playlists.
-    # Raises Error if invalid playlists were downloaded or there was trouble downloading them.
+    # Raises HLSpider::Spider::InvalidPlaylist if an invalid playlist is downloaded.
     def dive(urls = [])
       playlists = []
             
-      responses = async_download(urls)              
+      responses = download(urls)              
       responses.each do |resp|
         p = Playlist.new(resp.response, resp.req.uri.to_s)
               
@@ -122,11 +111,11 @@ module HLSpider
             playlists << p
           end 
         else
-          @invalid_playlists << p
+          raise InvalidPlaylist, "#{p.source} was an invalid playlist."
         end  
       end
       
-      return playlists.flatten  
+      playlists.flatten  
     end     
   end  
 end

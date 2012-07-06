@@ -1,12 +1,12 @@
 #!/usr/bin/env ruby
-require 'optparse'
-
 begin
   require 'hlspider'
 rescue LoadError
   require 'rubygems'
   require 'hlspider'
 end
+
+require 'optparse'
 
 options = {}
 
@@ -44,20 +44,14 @@ else
 end
   
 while x <= options[:loop] do
-  if spider.crawl
-    if spider.aligned?
-      puts "--- Aligned at segment : #{spider.last_segments[0]} ---"
-    else
-      puts "--- Unaligned with segments : #{spider.last_segments.join(', ')} ---"
-    end
+  spider.crawl!
+  
+  if spider.aligned?
+    puts "--- Aligned at segment : #{spider.last_segments[0]} ---"
   else
-    @errors.each do |err|
-      puts "--- #{err} ---"
-    end  
-  end    
-  
-  break if @errors
-  
+    puts "--- Unaligned with segments : #{spider.last_segments.join(', ')} ---"
+  end
+
   x += 1 unless options[:loop] == 0
   
   sleep(options[:sleep])

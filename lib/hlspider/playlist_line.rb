@@ -15,7 +15,7 @@ module HLSpider
     #
     # Returns Boolean.
     def has_segment?(str)
-      !!/.*.ts(\z|\?|$)/.match(str)
+      !!( str[/.*.ts(\z|\?|$)/] )
     end
 
     # Internal: Checks if String str contains links to .m3u8 file extensions.
@@ -32,7 +32,7 @@ module HLSpider
     #
     # Returns Boolean.
     def has_playlist?(str)
-      !!/.m3u8/.match(str)
+      !!( str[/.m3u8/] )
     end  
   
     # Internal: Checks if String str contains 'EXT-X-TARGETDURATION'.
@@ -49,7 +49,7 @@ module HLSpider
     #
     # Returns Boolean.
     def duration_line?(str)
-      !!/EXT-X-TARGETDURATION/.match(str)
+      !!( str[/EXT-X-TARGETDURATION/] )
     end 
   
     # Internal: Parses Integer target duration out of String str
@@ -66,10 +66,8 @@ module HLSpider
     #
     # Returns Integer or nil.
     def parse_duration(str)
-      /EXT-X-TARGETDURATION:(\d*)\z/.match(str)
-
-      if dur = Regexp.last_match(1)
-        dur.to_i
+      if dur = /EXT-X-TARGETDURATION:(\d*)\z/.match(str)
+        dur[1].to_i
       else  
         nil
       end  
@@ -104,9 +102,9 @@ module HLSpider
     #   absolute_url?("http://www.site.tld/file.m3u8")
     #   #=> true
     #
-    # Returns String or nil.    
+    # Returns Boolean.    
     def absolute_url?(str)
-      str.split("://").size > 1
+      !!( str[/\Ahtt(ps|p)\:\/\//] )
     end 
     
     # Internal: Parses string and returns whether or not it is a media sequence line.
@@ -123,7 +121,7 @@ module HLSpider
     #
     # Returns Boolean.
     def media_sequence_line?(str)
-      !!/EXT-X-MEDIA-SEQUENCE/.match(str)
+      !!( str[/EXT-X-MEDIA-SEQUENCE/] )
     end
     
     # Internal: Parses string and returns media sequence number.
@@ -137,10 +135,8 @@ module HLSpider
     #
     # Returns Integer or nil.
     def parse_sequence(line)  
-      /#EXT-X-MEDIA-SEQUENCE:\s*(\d*)/.match(line)
-      
-      if sequence = Regexp.last_match(1)
-        sequence.to_i
+      if sequence = /#EXT-X-MEDIA-SEQUENCE:\s*(\d*)/.match(line)
+        sequence[1].to_i
       else
         nil
       end    
