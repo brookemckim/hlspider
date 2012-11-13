@@ -8,9 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["brookemckim"]
   s.email       = ["brooke.mckim@gmail.com"]
   s.homepage    = "http://www.github.com/brookemckim/hlspider"
-  s.summary     = %q{Asynchronously download and parse .m3u8 playlists.}
-  s.description = %q{Asynchronously downloads .m3u8 playlists and reports back on whether or not the playlists are aligned in time.}
-
+  s.summary     = %q{Download and parse .m3u8 playlists.}
+  s.description = %q{Downloads .m3u8 playlists and reports back on whether or not the playlists are aligned in time.}
 
   s.rubyforge_project = "hlspider"
 
@@ -20,8 +19,5 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   # specify any dependencies here
-  s.add_runtime_dependency 'eventmachine',    '~> 1.0.0.beta.4'
-  s.add_runtime_dependency 'em-http-request', '~> 1.0.0'
-  
   s.add_development_dependency 'minitest', '~> 2.7.0'
 end

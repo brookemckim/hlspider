@@ -8,11 +8,6 @@
 #
 #   Spider.new("http://host.tld/video1/parent_playlist.m3u8")
 #   # => #<HLSpider::Spider:0x10cab12d0>
-
-require 'rubygems'
-require 'eventmachine'
-require 'em-http-request'
-
 module HLSpider
   class Spider 
     class InvalidPlaylist < StandardError; end;
@@ -100,18 +95,19 @@ module HLSpider
     def dive(urls = [])
       playlists = []
             
-      responses = download(urls)              
-      responses.each do |resp|
-        p = Playlist.new(resp.response, resp.req.uri.to_s)
+      responses = download(urls) 
+                   
+      responses.each do |response|
+        playlist = Playlist.new(response.body, response.url)
               
-        if p.valid?
-          if p.variable_playlist?
-            playlists << dive(p.playlists)
+        if playlist.valid?
+          if playlist.variable_playlist?
+            playlists << dive(playlist.playlists)
           else
-            playlists << p
+            playlists << playlist
           end 
         else
-          raise InvalidPlaylist, "#{p.source} was an invalid playlist."
+          raise InvalidPlaylist, "#{playlist.source} was an invalid playlist."
         end  
       end
       
