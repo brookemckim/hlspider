@@ -1,5 +1,8 @@
+[![BuildStatus](https://travis-ci.org/brookemckim/hlspider.png)](https://travis-ci.org/brookemckim/hlspider)
+[![CodeClimate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/brookemckim/hlspider)
+
 # HLSpider - the HTTP Live Streaming Spider
-Asynchronously downloads .m3u8 playlists and reports back on whether or not the playlists are aligned in time.
+Downloads .m3u8 playlists and reports back on whether or not the playlists are aligned in time.
 
 ## Purpose
 
@@ -23,18 +26,6 @@ OR
 # The parent multi bit rate playlist
 parent_url = "http://host.com/video1/all_bitrates_playlist.m3u8"
 spider = HLSpider.new(parent_url)
-```
-
-```
-spider.aligned?
-spider.invalid_playlists
-
-playlist = spider.playlists[0]
-playlist.valid?
-playlist.segments
-playlist.url
-playlist.file
-playlist.target_duration
 ```
 
 ### Command line
