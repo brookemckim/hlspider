@@ -1,4 +1,3 @@
-require 'rubygems'
 require 'minitest/autorun'
+require 'hlspider'
 
-require 'lib/hlspider'
