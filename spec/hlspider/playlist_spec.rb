@@ -20,6 +20,16 @@ rel/playlist.m3u8
 #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=204909
 http://anotherhost.com/playlist3.m3u8
     }
+
+    @extra_media_playlist = %q{#EXTM3U
+#EXT-X-FAXS-CM:URI="iphone360.mp4.drmmeta"
+#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="aac",NAME="Portuguese",DEFAULT=YES,AUTOSELECT=YES,LANGUAGE="pt",URI="iphone.m3u8"
+#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="aac",NAME="SAP",DEFAULT=NO,AUTOSELECT=YES,LANGUAGE="en",URI="sap.m3u8"
+#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=673742,CODECS="mp4a.40.2,avc1.4d401e",AUDIO="aac"
+web.m3u8
+#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=401437,CODECS="mp4a.40.2,avc1.4d401e",AUDIO="aac"
+iphone.m3u8
+    }
   end
 
   it "should identify if it is a segments playlist" do
@@ -49,4 +59,13 @@ http://anotherhost.com/playlist3.m3u8
     playlist.to_s.must_equal(playlist.inspect)
   end
 
+  it "should accept extra media urls on playlists" do
+    playlist = HLSpider::Playlist.new(@extra_media_playlist, "http://host.com/main/playlist.m3u8")
+    playlist.playlists.must_equal([
+    "http://host.com/main/iphone.m3u8",
+    "http://host.com/main/sap.m3u8",
+    "http://host.com/main/web.m3u8",
+    "http://host.com/main/iphone.m3u8"
+    ])
+  end
 end
