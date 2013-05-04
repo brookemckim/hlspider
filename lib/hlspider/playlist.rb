@@ -146,7 +146,7 @@ module HLSpider
     def to_s
       @file
     end  
-    alias_method :to_s, :inspect
+    alias_method :to_s, :inspect if RUBY_VERSION < "1.9"
   
   private
     include PlaylistLine
