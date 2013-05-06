@@ -143,10 +143,10 @@ module HLSpider
     #       http://hls.telvue.com/brightstar/2-1/playlist.m3u8?wowzasessionid=268983957'
     #
     # Returns String file.
-    def to_s
+    def inspect
       @file
     end  
-    alias_method :to_s, :inspect if RUBY_VERSION < "1.9"
+    alias_method :inspect, :to_s
   
   private
     include PlaylistLine
