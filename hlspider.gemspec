@@ -20,4 +20,5 @@ Gem::Specification.new do |s|
 
   # specify any dependencies here
   s.add_development_dependency 'minitest', '~> 2.7.0'
+  s.add_development_dependency 'webmock'
 end

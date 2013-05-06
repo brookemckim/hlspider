@@ -143,10 +143,10 @@ module HLSpider
     #       http://hls.telvue.com/brightstar/2-1/playlist.m3u8?wowzasessionid=268983957'
     #
     # Returns String file.
-    def to_s
+    def inspect
       @file
     end  
-    alias_method :to_s, :inspect
+    alias_method :inspect, :to_s
   
   private
     include PlaylistLine
@@ -166,7 +166,7 @@ module HLSpider
         @variable_playlist = true 
 
         @file.each_line do |line|
-          @playlists << line.strip if has_playlist?(line)
+          @playlists << line[/([^ "]+.m3u8)/].strip if has_playlist?(line)
         end  
       elsif has_segment?(@file) && !has_playlist?(@file)
         @segment_playlist  = true
