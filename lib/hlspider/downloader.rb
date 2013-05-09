@@ -4,8 +4,6 @@ require 'hlspider/response'
 # Internal: Asynchronsoly downloads urls and returns Array of responses.
 module HLSpider
   module Downloader
-    class DownloadError < StandardError; end;
-
     # Internal: Download given URLs.
     #
     # urls - An Array of strings or a single string of URL(s)
