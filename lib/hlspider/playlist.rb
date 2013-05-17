@@ -173,7 +173,7 @@ module HLSpider
 
         @file.each_line do |line|         
           if has_segment?(line)
-            @segments << filename(line.strip)
+            @segments << line[/([^ "]+.(ts|aac)[^ "]*)/].strip
           elsif duration_line?(line)
             @target_duration = parse_duration(line.strip)
           elsif media_sequence_line?(line)

@@ -15,7 +15,7 @@ module HLSpider
     #
     # Returns Boolean.
     def has_segment?(str)
-      !!( str[/.*.ts(\z|\?|$)/] )
+      !!( str[/.*.(ts|aac)(\z|\?|$)/] )
     end
 
     # Internal: Checks if String str contains links to .m3u8 file extensions.

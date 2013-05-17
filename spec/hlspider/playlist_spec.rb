@@ -42,6 +42,21 @@ chunklist-b1400000.m3u8?wowzasessionid=2030032484
 #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=96000
 chunklist-b96000.m3u8?wowzasessionid=2030032484&wowzaaudioonly
     }
+
+    @audioonly_playlist = %q{#EXTM3U
+#EXT-X-VERSION:3
+#EXT-X-ALLOW-CACHE:NO
+#EXT-X-TARGETDURATION:11
+#EXT-X-MEDIA-SEQUENCE:35
+#EXTINF:9.0,
+media-b96000_35.aac?wowzasessionid=1332469433&wowzaaudioonly
+#EXTINF:9.0,
+media-b96000_36.aac?wowzasessionid=1332469433&wowzaaudioonly
+#EXTINF:9.0,
+media-b96000_37.aac?wowzasessionid=1332469433&wowzaaudioonly
+#EXTINF:9.0,
+media-b96000_38.aac?wowzasessionid=1332469433&wowzaaudioonly
+    }
   end
 
   it "should identify if it is a segments playlist" do
@@ -88,6 +103,16 @@ chunklist-b96000.m3u8?wowzasessionid=2030032484&wowzaaudioonly
     "http://host.com/main/chunklist-b1000000.m3u8?wowzasessionid=2030032484",
     "http://host.com/main/chunklist-b1400000.m3u8?wowzasessionid=2030032484",
     "http://host.com/main/chunklist-b96000.m3u8?wowzasessionid=2030032484&wowzaaudioonly"
+    ])
+  end
+
+  it "should accept audio only segments" do
+    playlist = HLSpider::Playlist.new(@audioonly_playlist, "http://host.com/main/playlist.m3u8")
+    playlist.segments.must_equal([
+    "media-b96000_35.aac?wowzasessionid=1332469433&wowzaaudioonly",
+    "media-b96000_36.aac?wowzasessionid=1332469433&wowzaaudioonly",
+    "media-b96000_37.aac?wowzasessionid=1332469433&wowzaaudioonly",
+    "media-b96000_38.aac?wowzasessionid=1332469433&wowzaaudioonly"
     ])
   end
 end
