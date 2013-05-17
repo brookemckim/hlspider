@@ -166,7 +166,7 @@ module HLSpider
         @variable_playlist = true 
 
         @file.each_line do |line|
-          @playlists << line[/([^ "]+.m3u8)/].strip if has_playlist?(line)
+          @playlists << line[/([^ "]+.m3u8[^ "]*)/].strip if has_playlist?(line)
         end  
       elsif has_segment?(@file) && !has_playlist?(@file)
         @segment_playlist  = true

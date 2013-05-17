@@ -30,6 +30,18 @@ web.m3u8
 #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=401437,CODECS="mp4a.40.2,avc1.4d401e",AUDIO="aac"
 iphone.m3u8
     }
+
+    @querystring_playlist = %q{#EXTM3U
+#EXT-X-VERSION:3
+#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=500000
+chunklist-b500000.m3u8?wowzasessionid=2030032484
+#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=1000000
+chunklist-b1000000.m3u8?wowzasessionid=2030032484
+#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=1400000
+chunklist-b1400000.m3u8?wowzasessionid=2030032484
+#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=96000
+chunklist-b96000.m3u8?wowzasessionid=2030032484&wowzaaudioonly
+    }
   end
 
   it "should identify if it is a segments playlist" do
@@ -66,6 +78,16 @@ iphone.m3u8
     "http://host.com/main/sap.m3u8",
     "http://host.com/main/web.m3u8",
     "http://host.com/main/iphone.m3u8"
+    ])
+  end
+
+  it "should accept urls with querystings on playlists" do
+    playlist = HLSpider::Playlist.new(@querystring_playlist, "http://host.com/main/playlist.m3u8")
+    playlist.playlists.must_equal([
+    "http://host.com/main/chunklist-b500000.m3u8?wowzasessionid=2030032484",
+    "http://host.com/main/chunklist-b1000000.m3u8?wowzasessionid=2030032484",
+    "http://host.com/main/chunklist-b1400000.m3u8?wowzasessionid=2030032484",
+    "http://host.com/main/chunklist-b96000.m3u8?wowzasessionid=2030032484&wowzaaudioonly"
     ])
   end
 end
