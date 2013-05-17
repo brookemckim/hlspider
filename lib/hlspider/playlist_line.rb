@@ -73,23 +73,6 @@ module HLSpider
       end  
     end
     
-    # Internal: Parses String video segment filename out of String str.
-    #
-    # str - String to be parsed
-    #    
-    # Examples
-    #
-    #   filename("/media/video_01.ts?query_string=22")
-    #   #=> 'video_01.ts'
-    #
-    #   filename("arandomsring")
-    #   #=> nil
-    #
-    # Returns String or nil.
-    def filename(str)
-     str.slice(/\w{1,}(.ts)/)
-    end
-
     # Internal: Parses string and returns whether or not it is an absolute url.
     #
     # str - String to be parsed

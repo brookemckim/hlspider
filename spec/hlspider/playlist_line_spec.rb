@@ -49,12 +49,6 @@ describe HLSpider::PlaylistLine do
     end   
   end 
   
-  describe "#filename" do
-    it "returns String with filename on String with filename" do
-      PlaylistLine.filename(@segment_line).must_equal("video_123123023030.ts")
-    end  
-  end
-  
   describe "#absolute_url?" do
     it "returns true for full url" do
       PlaylistLine.absolute_url?("http://www.google.com/gmail/").must_equal(true)
@@ -85,4 +79,3 @@ describe HLSpider::PlaylistLine do
     end  
   end        
 end
-  
