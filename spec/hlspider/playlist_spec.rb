@@ -76,6 +76,11 @@ media-b96000_38.aac?wowzasessionid=1332469433&wowzaaudioonly
     playlist.playlists[0].must_equal("http://host.com/main/rel/playlist.m3u8")
   end
 
+  it "should accept playlist names with hifen" do
+    playlist = HLSpider::Playlist.new(@variable_playlist, "http://host.com/main/playlist-with-hifen.m3u8")
+    playlist.playlists[0].must_equal("http://host.com/main/rel/playlist.m3u8")
+  end
+
   it "should accept absolute playlists" do
     playlist = HLSpider::Playlist.new(@variable_playlist, "http://host.com/main/playlist.m3u8")
     playlist.playlists[1].must_equal("http://anotherhost.com/playlist3.m3u8")

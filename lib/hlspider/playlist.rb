@@ -128,7 +128,7 @@ module HLSpider
         if absolute_url?(p)
           p
         elsif @source
-          @source.sub(/\w*.m3u8/, p)
+          @source.sub(/[^\/]*.m3u8/, p)
         end    
       end  
     end  
