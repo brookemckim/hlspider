@@ -19,6 +19,8 @@
 #    @segment_playlist=true
 #   >
 
+require 'uri'
+
 module HLSpider
   class Playlist
     # Public: Gets/Sets the raw M3U8 Playlist File.
@@ -26,12 +28,6 @@ module HLSpider
     
     # Public: Gets/Sets Optional source of playlist file. Used only for reference.
     attr_accessor :source
-    
-    # Public: Gets sub-playlists if the playlist has child playlists (Variable Rate Playlist).
-    attr_reader :playlists
-    
-    # Public: Gets segments contained in the playlist.
-    attr_reader :segments 
     
     # Public: Gets the target duration if available. 
     attr_reader :target_duration 
@@ -47,6 +43,13 @@ module HLSpider
       @file   = file
       @source = source       
       @valid  = false
+      @domain = ""
+      if @source
+        uri = URI.parse(@source)
+        if uri.is_a?(URI::HTTP)
+          @domain = @source[0...@source.index(uri.request_uri)]
+        end
+      end
       
       @variable_playlist = false
       @segment_playlist  = false
@@ -127,6 +130,31 @@ module HLSpider
       @playlists.collect do |p|
         if absolute_url?(p)
           p
+        elsif p.start_with?("/")
+          @domain + p
+        elsif @source
+          @source.sub(/[^\/]*.m3u8/, p)
+        end
+      end
+    end
+
+    # Public: Segments contained in playlist file. Appends source if
+    #   segments are not absolute urls.
+    #
+    #
+    #
+    # Examples
+    #
+    #   segments
+    #   # => ["http://site.tld/segments_1.ts", "http://site.tld/segments_2.ts"]
+    #
+    # Returns Array of Strings.
+    def segments
+      @segments.collect do |p|
+        if absolute_url?(p)
+          p
+        elsif p.start_with?("/")
+          @domain + p
         elsif @source
           @source.sub(/[^\/]*.m3u8/, p)
         end    

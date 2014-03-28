@@ -10,6 +10,7 @@ describe HLSpider::Playlist do
 #EXTINF:7.12,
 segment00000.ts
 segment00001.ts
+/absolute/path/segment00002.ts
 #EXT-X-ENDLIST
     }
 
@@ -19,6 +20,8 @@ segment00001.ts
 rel/playlist.m3u8
 #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=204909
 http://anotherhost.com/playlist3.m3u8
+#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=173742
+/absolute/path/playlist.m3u8
     }
 
     @extra_media_playlist = %q{#EXTM3U
@@ -76,6 +79,16 @@ media-b96000_38.aac?wowzasessionid=1332469433&wowzaaudioonly
     playlist.playlists[0].must_equal("http://host.com/main/rel/playlist.m3u8")
   end
 
+  it "should resolve absolute playlists" do
+    playlist = HLSpider::Playlist.new(@variable_playlist, "http://host.com/main/playlist.m3u8")
+    playlist.playlists[2].must_equal("http://host.com/absolute/path/playlist.m3u8")
+  end
+
+  it "should resolve absolute segments" do
+    playlist = HLSpider::Playlist.new(@segments_playlist, "http://host.com/main/playlist.m3u8")
+    playlist.segments[2].must_equal("http://host.com/absolute/path/segment00002.ts")
+  end
+
   it "should accept playlist names with hifen" do
     playlist = HLSpider::Playlist.new(@variable_playlist, "http://host.com/main/playlist-with-hifen.m3u8")
     playlist.playlists[0].must_equal("http://host.com/main/rel/playlist.m3u8")
@@ -114,10 +127,10 @@ media-b96000_38.aac?wowzasessionid=1332469433&wowzaaudioonly
   it "should accept audio only segments" do
     playlist = HLSpider::Playlist.new(@audioonly_playlist, "http://host.com/main/playlist.m3u8")
     playlist.segments.must_equal([
-    "media-b96000_35.aac?wowzasessionid=1332469433&wowzaaudioonly",
-    "media-b96000_36.aac?wowzasessionid=1332469433&wowzaaudioonly",
-    "media-b96000_37.aac?wowzasessionid=1332469433&wowzaaudioonly",
-    "media-b96000_38.aac?wowzasessionid=1332469433&wowzaaudioonly"
+    "http://host.com/main/media-b96000_35.aac?wowzasessionid=1332469433&wowzaaudioonly",
+    "http://host.com/main/media-b96000_36.aac?wowzasessionid=1332469433&wowzaaudioonly",
+    "http://host.com/main/media-b96000_37.aac?wowzasessionid=1332469433&wowzaaudioonly",
+    "http://host.com/main/media-b96000_38.aac?wowzasessionid=1332469433&wowzaaudioonly"
     ])
   end
 end
