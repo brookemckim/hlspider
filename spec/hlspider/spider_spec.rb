@@ -1,7 +1,10 @@
 require 'spec_helper'
 
 describe HLSpider::Spider do
+  include WebMock::API
+
   before do
+    WebMock.reset!
     @playlist  = "http://host.com/playlist.m3u8"
     @playlists = ["http://host.com/playlist.m3u8", "http://host.com/playlist2.m3u8"]
     stub_request(:get, "http://host.com/playlist.m3u8").to_return({:status => 200, :headers => {}, :body => %q{#EXTM3U
